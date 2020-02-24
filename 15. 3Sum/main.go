@@ -1,8 +1,9 @@
 package main
 
-import "fmt"
-
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 func threeSum(nums []int) (result [][]int) {
 	sort := func(l []int) { //  min mid max
@@ -15,7 +16,6 @@ func threeSum(nums []int) (result [][]int) {
 			l[1], l[2] = l[2], l[1]
 		}
 	}
-	w := make(map[int]int, 0)
 	add := func(l []int) {
 		sort(l)
 		for _, v := range result {
@@ -58,7 +58,7 @@ func threeSum1(nums []int) (result [][]int) {
 
 		}
 	}
-
+	return
 }
 
 func main() {

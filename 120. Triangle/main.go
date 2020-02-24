@@ -1,6 +1,6 @@
 package main
 
-func minimumTotal(triangle [][]int) int {
+func minimumTotal1(triangle [][]int) int {
 	if len(triangle) == 0 {
 		return 0
 	}
@@ -33,6 +33,21 @@ func minimumTotal(triangle [][]int) int {
 		}
 	}
 	return m
+}
+
+func minimumTotal(triangle [][]int) int {
+	min := func(a, b int) int {
+		if a > b {
+			return b
+		}
+		return a
+	}
+	for i := len(triangle) - 2; i >= 0; i-- {
+		for j := 0; j < len(triangle[i]); j++ {
+			triangle[i][j] = min(triangle[i+1][j], triangle[i+1][j+1]) + triangle[i][j]
+		}
+	}
+	return triangle[0][0]
 }
 
 func main() {
