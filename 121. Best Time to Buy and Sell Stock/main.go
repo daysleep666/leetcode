@@ -75,27 +75,28 @@ func maxProfit(prices []int) int {
 	if len(prices) == 0 {
 		return 0
 	}
+	getMax := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
 	dp := make([][]int, len(prices))
 	for i, _ := range dp {
-		dp[i] = make([]int, 2)
+		dp[i] = make([]int, 3)
 	}
-	k := 0
+	dp[0][1] = -prices[0]
+	result := 0
 	for i := 1; i < len(prices); i++ {
-		if (dp[i-1][1]+prices[i]) > dp[i-1][0] && k == 0 {
-			dp[i][0] = dp[i-1][1] + prices[i]
-		} else {
-			dp[i][0] = dp[i-1][0]
-		}
-		if (dp[i-1][0]-prices[i] > dp[i-1][1]) && k == 0 {
-			dp[i][1] = dp[i-1][0] - prices[i]
-			k++
-		} else {
-			dp[i][1] = dp[i-1][1]
-		}
+		dp[i][0] = dp[i-1][0]
+		dp[i][1] = getMax(dp[i-1][1], dp[i-1][0]-prices[i])
+		dp[i][2] = dp[i-1][1] + prices[i]
+		result = getMax(result, dp[i][2])
 	}
-	fmt.Println(dp)
-	return dp[len(prices)-1][0]
+
+	return result
 }
 
 func main() {
+	fmt.Println(maxProfit([]int{1, 2, 3, 0, 2}))
 }

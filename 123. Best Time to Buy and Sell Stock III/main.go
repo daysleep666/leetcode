@@ -24,10 +24,8 @@ func maxProfit(prices []int) int {
 		dp[i][0] = dp[i-1][0]
 		dp[i][1] = getMax(dp[i-1][1], dp[i-1][0]-prices[i])
 		dp[i][2] = getMax(dp[i-1][2], dp[i-1][1]+prices[i])
-		if i > 1 {
-			dp[i][3] = getMax(dp[i-1][3], dp[i-1][2]-prices[i])
-			dp[i][4] = getMax(dp[i-1][4], dp[i-1][3]+prices[i])
-		}
+		dp[i][3] = getMax(dp[i-1][3], dp[i-1][2]-prices[i])
+		dp[i][4] = getMax(dp[i-1][4], dp[i-1][3]+prices[i])
 		result = getMax(getMax(result, dp[i][4]), dp[i][2])
 	}
 	fmt.Println(dp)
