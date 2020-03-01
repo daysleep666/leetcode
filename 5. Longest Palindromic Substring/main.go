@@ -1,0 +1,68 @@
+package main
+
+import "fmt"
+
+func longestPalindrome1(s string) string {
+	if len(s) <= 1 {
+		return s
+	}
+	return recursive("", s)
+}
+
+func recursive(header string, s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+	var s1 string
+	if len(header) == 0 {
+		s1 = recursive("", s[1:])
+	}
+	s3 := header + string(s[0])
+	s2 := recursive(s3, s[1:])
+	if !isPalindrome(s3) {
+		return getMax(s1, s2)
+	}
+	return getMax(getMax(s1, s2), s3)
+}
+
+func getMax(a, b string) string {
+	if len(a) > len(b) {
+		return a
+	}
+	return b
+}
+
+func isPalindrome(s string) bool {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			return false
+		}
+	}
+	return true
+}
+
+func longestPalindrome(s string) string { // 时间复杂度O(n^3)
+	if len(s) <= 1 {
+		return s
+	}
+	list := make([]string, 0)
+	list = append(list, string(s[0]))
+	result := ""
+	for i := 1; i < len(s); i++ {
+		l := len(list)
+		for j := 0; j < l; j++ {
+			list = append(list, string(s[i]))
+			list = append(list, list[j]+string(s[i]))
+			if isPalindrome(list[j]+string(s[i])) && len(list[j]+string(s[i])) > len(result) {
+				result = list[j] + string(s[i])
+			}
+		}
+	}
+	return result
+}
+
+func main() {
+	fmt.Println(longestPalindrome("babad"))
+	fmt.Println(longestPalindrome("cbbd"))
+	fmt.Println(longestPalindrome("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"))
+}
