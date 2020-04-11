@@ -29,7 +29,7 @@ func lengthOfLIS1(nums []int) int {
 	return max
 }
 
-func lengthOfLIS1(nums []int) int {
+func lengthOfLIS2(nums []int) int {
 	max := 0
 	for i := 0; i < len(nums); i++ {
 		v := recursive(nums[i], nums[i+1:])
@@ -59,23 +59,43 @@ func getMax(a, b int) int {
 }
 
 func lengthOfLIS(nums []int) int {
+	if len(nums) <= 1 {
+		return len(nums)
+	}
 	list := make([]int, 0, len(nums))
 	getMid := func(v int) int {
-		low, high := 0, len(list)-1
+		low, high := 0, len(list)
 		mid := 0
 		for low < high {
 			mid = (low + high) / 2
-			if list[mid] < v {
+			if list[mid] == v {
+				return mid
+			} else if list[mid] < v {
 				low = mid + 1
 			} else {
-				high = mid - 1
+				high = mid
 			}
 		}
-		return mid
+		return low
 	}
+	max := 0
 	for i := 0; i < len(nums); i++ {
+		if len(list) == 0 {
+			list = append(list, nums[i])
+			continue
+		}
+		j := getMid(nums[i])
+		if j >= len(list) {
+			list = append(list, nums[i])
+		} else {
+			list[j] = nums[i]
+		}
 
+		if len(list) > max {
+			max = len(list)
+		}
 	}
+	return max
 }
 
 func main() {
