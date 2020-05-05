@@ -28,6 +28,13 @@ func InsertListNode(n *ListNode, v int) *ListNode {
 	return n
 }
 
+func MakeList(l []int) (head *ListNode) {
+	for _, v := range l {
+		head = InsertListNode(head, v)
+	}
+	return head
+}
+
 // GetExampleListNode 正顺序的n个
 func GetExampleListNode(n int) (head *ListNode) {
 	for i := 0; i < n; i++ {
