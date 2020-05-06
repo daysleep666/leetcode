@@ -2,7 +2,7 @@ package pkg
 
 // MyHeap ...
 type MyHeap struct {
-	List []interface{}
+	List []int
 }
 
 // Len ...
@@ -45,11 +45,32 @@ func (mh *MyHeap) Pop() interface{} {
 func Heapify(arr []int) {
 	// (index-1)/2
 	for i := len(arr) / 2; i >= 0; i-- {
-		if i*2+1 < len(arr) && arr[i] > arr[i*2+1] {
-			arr[i], arr[i*2+1] = arr[i*2+1], arr[i]
-		}
-		if i*2+2 < len(arr) && arr[i] > arr[i*2+2] {
-			arr[i], arr[i*2+2] = arr[i*2+2], arr[i]
-		}
+		heapify(arr, i, len(arr))
+	}
+}
+
+func heapify(arr []int, i int, l int) {
+	n := i
+	if i*2+1 < l && arr[i] < arr[i*2+1] {
+		n = i*2 + 1
+	}
+	if i*2+2 < l && arr[n] < arr[i*2+2] {
+		n = i*2 + 2
+	}
+	if i == n {
+		return
+	}
+	arr[i], arr[n] = arr[n], arr[i]
+	i = n
+	heapify(arr, i, l)
+}
+
+// SortByHeap 堆排序
+func SortByHeap(arr []int) {
+	l := len(arr)
+	for l > 1 {
+		arr[0], arr[l-1] = arr[l-1], arr[0]
+		heapify(arr, 0, l-1)
+		l--
 	}
 }

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
+	"sort"
 
 	"github.com/daysleep666/leetcode/pkg"
 )
@@ -13,5 +13,10 @@ func main() {
 		arr = append(arr, int(rand.Int63()))
 	}
 	pkg.Heapify(arr)
-	fmt.Println(arr)
+	// fmt.Println(arr)
+	pkg.SortByHeap(arr)
+	// fmt.Println(arr)
+	if !sort.IntsAreSorted(arr) {
+		panic("--")
+	}
 }
