@@ -1,22 +1,28 @@
 package main
 
-import (
-	"math/rand"
-	"sort"
-
-	"github.com/daysleep666/leetcode/pkg"
-)
-
 func main() {
-	arr := []int{4, 3, 2, 1}
-	for i := 0; i < 10000; i++ {
-		arr = append(arr, int(rand.Int63()))
-	}
-	pkg.Heapify(arr)
-	// fmt.Println(arr)
-	pkg.SortByHeap(arr)
-	// fmt.Println(arr)
-	if !sort.IntsAreSorted(arr) {
-		panic("--")
+	add := func(v int) {
+		if len(arr) == 0 {
+			arr = append(arr, v)
+			return
+		}
+		low, high, mid := 0, len(arr)-1, 0
+		for low <= high {
+			// 超出int64
+			mid = (low + high) / 2
+			if arr[mid] == v {
+				low = mid
+				break
+			} else if arr[mid] > v {
+				high = mid - 1
+			} else {
+				low = mid + 1
+			}
+		}
+		arr = append(arr, 0)
+		for i := len(arr) - 1; i > low; i-- {
+			arr[i] = arr[i-1]
+		}
+		arr[low] = v
 	}
 }

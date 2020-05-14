@@ -12,11 +12,7 @@ func (mh *MyHeap) Len() int {
 
 // Less ...
 func (mh *MyHeap) Less(i, j int) bool {
-	switch mh.List[i].(type) {
-	case int:
-		return mh.List[i].(int) < mh.List[j].(int)
-	}
-	return false
+	return mh.List[i] < mh.List[j]
 }
 
 // Swap ...
@@ -25,12 +21,12 @@ func (mh *MyHeap) Swap(i, j int) {
 }
 
 // Push ...
-func (mh *MyHeap) Push(x interface{}) {
-	mh.List = append(mh.List, x.(interface{}))
+func (mh *MyHeap) Push(x int) {
+	mh.List = append(mh.List, x)
 }
 
 // Pop ...
-func (mh *MyHeap) Pop() interface{} {
+func (mh *MyHeap) Pop() int {
 	if len(mh.List) == 0 {
 		return nil
 	}
