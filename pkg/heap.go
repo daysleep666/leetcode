@@ -28,7 +28,7 @@ func (mh *MyHeap) Push(x int) {
 // Pop ...
 func (mh *MyHeap) Pop() int {
 	if len(mh.List) == 0 {
-		return nil
+		return 0
 	}
 	v := mh.List[0]
 	mh.List[0] = mh.List[mh.Len()-1]
